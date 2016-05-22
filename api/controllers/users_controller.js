@@ -56,6 +56,7 @@ function listUsers(req, res) {
     });
 }
 
+//TODO: Fix update function, don't working ...
 function updateUser(req, res) {
     var user = req.body;
     user.userId = req.swagger.params.userId.value;

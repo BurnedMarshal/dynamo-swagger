@@ -1,13 +1,13 @@
 'use strict'
 
+//Setting environment variable
+var NODE_ENV = process.env.NODE_ENV || "development";
+
+//Setting connection to dynamodb and load specific configuration
 var vogels = require('vogels');
 var Joi = require('joi');
-vogels.AWS.config.update({
-  region: "eu-west-1",
-  endpoint: "http://localhost:8000",
-  accessKeyId: "abcd1",
-  secretAccessKey: 'SECRET'
-});
+var dynamoDbConf = require('./../../dynamodb.json');
+vogels.AWS.config.update(dynamoDbConf[NODE_ENV]);
 
 var User = vogels.define('User', {
   hashKey : 'userId',

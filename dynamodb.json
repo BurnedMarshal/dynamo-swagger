@@ -1,0 +1,13 @@
+{
+  "development": {
+    "region": "eu-west-1",
+    "endpoint": "http://localhost:8000",
+    "accessKeyId": "abcd1",
+    "secretAccessKey": "SECRET"
+  },
+  "production": {
+    "region": "eu-west-1",
+    "accessKeyId": "INSERT YOUR AWS DYNAMO ACCESS ID",
+    "secretAccessKey": "INSERT YOUR AWS DYNAMO SECRET ACCESS ID"
+  }
+}

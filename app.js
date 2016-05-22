@@ -4,13 +4,16 @@ var SwaggerExpress = require('swagger-express-mw');
 var jwt = require('express-jwt');
 var app = require('express')();
 
+//Setting environment variable
+var NODE_ENV = process.env.NODE_ENV || "development";
+console.log(NODE_ENV);
+
+//Setting connection to dynamodb and load specific configuration
 var vogels = require('vogels');
-vogels.AWS.config.update({
-  region: "eu-west-1",
-  endpoint: "http://localhost:8000",
-  accessKeyId: "abcd1",
-  secretAccessKey: 'SECRET'
-});
+var dynamoDbConf = require('./dynamodb.json');
+console.log(dynamoDbConf);
+vogels.AWS.config.update(dynamoDbConf[NODE_ENV]);
+//Load Models
 var User = require('./api/models/user');
 
 vogels.createTables({
