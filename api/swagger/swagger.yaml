@@ -20,6 +20,20 @@ produces:
 paths:
   /users:
     x-swagger-router-controller: users_controller
+    get:
+      description: Get all users in database
+      operationId: users
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/ShowUserResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
     post:
       description: Create new User in database
       operationId: newUser
@@ -27,11 +41,32 @@ paths:
         - name: user
           in: body
           description: The email of the user
-          required: false
+          required: true
           schema:
             $ref: "#/definitions/CreateUserRequest"
       responses:
         "201":
+          description: Success
+          schema:
+            $ref: "#/definitions/CreateUserResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /users/{userId}:
+    x-swagger-router-controller: users_controller
+    get:
+      description: Read an User in database
+      operationId: user
+      parameters:
+        - name: userId
+          in: path
+          description: The user id
+          required: true
+          type: string
+      responses:
+        "200":
           description: Success
           schema:
             $ref: "#/definitions/CreateUserResponse"
@@ -68,6 +103,24 @@ paths:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
 definitions:
+  ShowUserResponse:
+    required:
+      - email
+      - name
+      - password
+      - userId
+      - createdAt
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      userId:
+        type: string
+      createdAt:
+        type: string
   CreateUserRequest:
     required:
       - email
