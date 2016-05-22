@@ -8,10 +8,14 @@
   "license": "",
   "main": "app.js",
   "dependencies": {
+    "async": "^1.5.2",
+    "crypto": "0.0.3",
     "express": "^4.12.3",
     "express-jwt": "^3.4.0",
+    "joi": "^8.1.0",
     "jsonwebtoken": "^7.0.0",
-    "swagger-express-mw": "^0.1.0"
+    "swagger-express-mw": "^0.1.0",
+    "vogels": "^2.2.0"
   },
   "devDependencies": {
     "should": "^7.1.0",

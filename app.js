@@ -4,6 +4,25 @@ var SwaggerExpress = require('swagger-express-mw');
 var jwt = require('express-jwt');
 var app = require('express')();
 
+var vogels = require('vogels');
+vogels.AWS.config.update({
+  region: "eu-west-1",
+  endpoint: "http://localhost:8000",
+  accessKeyId: "abcd1",
+  secretAccessKey: 'SECRET'
+});
+var User = require('./api/models/user');
+
+vogels.createTables({
+  'User': {readCapacity: 20, writeCapacity: 4}
+}, function(err) {
+  if (err) {
+    console.error('Error creating tables: ', err);
+  } else {
+    console.log('Tables has been created');
+  }
+});
+
 module.exports = app; // for testing
 
 var config = {
@@ -38,5 +57,8 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
 
   if (swaggerExpress.runner.swagger.paths['/hello']) {
     console.log('try this:\ncurl http://127.0.0.1:' + port + '/hello?name=Scott');
+  }
+  if (swaggerExpress.runner.swagger.paths['/users']) {
+    console.log('try this:\ncurl http://127.0.0.1:' + port + '/users?email=jsmith@example.org');
   }
 });
