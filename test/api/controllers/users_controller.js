@@ -79,6 +79,40 @@ describe('controllers', function() {
 
                         });
 
+                        describe(`PUT /users/${userId}`, function() {
+
+                            it('should return an user object whit data updated', function(done) {
+
+                                request(server)
+                                    .put(`/users/${userId}`)
+                                    .send({
+                                        'name': 'James'
+                                    })
+                                    .set('Content-Type', 'application/json')
+                                    .set('Accept', 'application/json')
+                                    .set('Authorization', `Bearer ${token}`)
+                                    .expect('Content-Type', /json/)
+                                    .expect(200)
+                                    .end(function(err, res) {
+                                        should.not.exist(err);
+
+                                        res.body.should.have.property('name', 'James');
+                                        res.body.should.have.property('email', email);
+
+                                        var shasum = crypto.createHash('sha256');
+                                        shasum.update('secrete');
+                                        var password = shasum.digest('hex');
+
+                                        res.body.should.have.property('password', password);
+                                        res.body.should.have.property('userId', userId);
+
+                                        done();
+                                    });
+
+                            });
+
+                        });
+
 
                         describe(`GET /users`, function() {
 
@@ -93,6 +127,30 @@ describe('controllers', function() {
                                     .end(function(err, res) {
                                         should.not.exist(err);
                                         res.body.should.be.a.Array();
+                                        console.log(res.body);
+                                        done();
+                                    });
+
+                            });
+
+                        });
+
+
+                        describe(`DELETE /users/${userId}`, function() {
+
+                            it('should return an user object whit data updated', function(done) {
+
+                                request(server)
+                                    .delete(`/users/${userId}`)
+                                    .set('Content-Type', 'application/json')
+                                    .set('Accept', 'application/json')
+                                    .set('Authorization', `Bearer ${token}`)
+                                    .expect('Content-Type', /json/)
+                                    .expect(200)
+                                    .end(function(err, res) {
+                                        should.not.exist(err);
+
+                                        res.body.message.should.eql("Resource deleted");
 
                                         done();
                                     });
@@ -100,6 +158,7 @@ describe('controllers', function() {
                             });
 
                         });
+
 
 
                         done();
