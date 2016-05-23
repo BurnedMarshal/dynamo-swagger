@@ -6,12 +6,10 @@ var app = require('express')();
 
 //Setting environment variable
 var NODE_ENV = process.env.NODE_ENV || "development";
-console.log(NODE_ENV);
 
 //Setting connection to dynamodb and load specific configuration
 var vogels = require('vogels');
 var dynamoDbConf = require('./dynamodb.json');
-console.log(dynamoDbConf);
 vogels.AWS.config.update(dynamoDbConf[NODE_ENV]);
 //Load Models
 var User = require('./api/models/user');

@@ -127,7 +127,6 @@ describe('controllers', function() {
                                     .end(function(err, res) {
                                         should.not.exist(err);
                                         res.body.should.be.a.Array();
-                                        console.log(res.body);
                                         done();
                                     });
 

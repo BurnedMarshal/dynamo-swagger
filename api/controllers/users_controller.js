@@ -66,13 +66,10 @@ function updateUser(req, res) {
                 res.status(500).json(err);
             } else {
                 user.email = dynamoRes.Items[0].attrs.email;
-                console.log(user);
                 User.update(user, function(err, updatedUser) {
                     if (err) {
-                        console.log(err);
                         res.status(500).json(err);
                     } else {
-                        console.log(updatedUser);
                         res.status(200).json(updatedUser);
                     }
                 });
@@ -83,7 +80,6 @@ function updateUser(req, res) {
             if (err) {
                 res.status(500).json(err);
             } else {
-                console.log(updatedUser);
                 res.status(200).json(updatedUser);
             }
         });
